@@ -1,7 +1,5 @@
 package com.example.phobos.places;
 
-import android.app.Activity;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,16 +16,8 @@ import com.example.phobos.places.dummy.DummyContent;
  * on handsets.
  */
 public class PlaceDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
-    public static final String ARG_ITEM_ID = "item_id";
-
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private DummyContent.DummyItem mItem;
+    public static final String ARG_ITEM_ID = "place_id";
+    private Place place;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -44,13 +34,7 @@ public class PlaceDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
-
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.content);
-            }
+            place = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
         }
     }
 
@@ -58,10 +42,8 @@ public class PlaceDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.place_detail, container, false);
-
-        // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.place_detail)).setText(mItem.details);
+        if (place != null) {
+            ((TextView) rootView.findViewById(R.id.place_detail)).setText(place.getText());
         }
 
         return rootView;
