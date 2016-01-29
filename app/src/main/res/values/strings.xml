@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Places</string>
+    <string name="title_new_place">New place</string>
     <string name="title_place_detail">Place Detail</string>
+    <string name="text_placeholder">Krasnoyarsk</string>
+    <string name="last_visit_placeholder">01.01.2016</string>
 </resources>
