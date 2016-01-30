@@ -52,6 +52,8 @@ public class PlaceListActivity extends AppCompatActivity implements PlaceAdapter
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+
+        DownloadService.getPlaces(this);
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
