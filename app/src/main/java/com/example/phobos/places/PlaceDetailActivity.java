@@ -29,8 +29,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
-            arguments.putString(PlaceDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(PlaceDetailFragment.ARG_ITEM_ID));
+            arguments.putParcelable(PlaceDetailFragment.ARG_URI, getIntent().getData());
             PlaceDetailFragment fragment = new PlaceDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

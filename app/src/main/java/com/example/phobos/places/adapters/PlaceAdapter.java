@@ -1,5 +1,6 @@
-package com.example.phobos.places;
+package com.example.phobos.places.adapters;
 
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,19 +8,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.List;
+import com.example.phobos.places.R;
+import com.example.phobos.places.Utils;
 
-public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> {
-    private final List<Place> places;
+import static com.example.phobos.places.data.PlacesContract.PlaceEntry;
+
+public class PlaceAdapter extends RecyclerViewCursorAdapter<PlaceAdapter.ViewHolder> {
     private ItemClickListener itemClickListener;
 
-    public PlaceAdapter(List<Place> places, ItemClickListener itemClickListener) {
-        this.places = places;
+    public PlaceAdapter(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
     public interface ItemClickListener {
-        void itemClicked(Place place);
+        void itemClicked(Cursor cursor, int position, long id);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,20 +51,24 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final Place place = places.get(position);
-        holder.textView.setText(places.get(position).getText());
-        holder.lastVisitedView.setText(places.get(position).getLastVisited().toString());
+    public void onBindViewHolder(ViewHolder holder, Cursor cursor) {
+        final String text = cursor.getString(cursor.getColumnIndex(PlaceEntry.COLUMN_TEXT));
+        final String lastVisited = cursor.getString(cursor.getColumnIndex(PlaceEntry.COLUMN_LAST_VISITED));
+        holder.textView.setText(text);
+        holder.lastVisitedView.setText(Utils.formatDate(lastVisited));
         holder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClickListener.itemClicked(place);
+                final RecyclerView recyclerView = (RecyclerView) v.getParent();
+                final int position = recyclerView.getChildLayoutPosition(v);
+
+                if (position != RecyclerView.NO_POSITION) {
+                    final Cursor cursor = getItem(position);
+                    int columnIdIndex = cursor.getColumnIndex(PlaceEntry._ID);
+                    long id = cursor.getLong(columnIdIndex);
+                    itemClickListener.itemClicked(cursor, position, id);
+                }
             }
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        return places.size();
     }
 }

@@ -4,4 +4,6 @@
     <string name="title_place_detail">Place Detail</string>
     <string name="text_placeholder">Krasnoyarsk</string>
     <string name="last_visit_placeholder">01.01.2016</string>
+
+    <string name="content_authority" translatable="false">com.example.phobos.places</string>
 </resources>
