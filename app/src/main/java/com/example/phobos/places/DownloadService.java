@@ -95,7 +95,7 @@ public class DownloadService extends IntentService {
             urlConnection.connect();
 
             InputStream is = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder stringBuilder = new StringBuilder();
             if (is == null) {
                 return;
             }
@@ -103,15 +103,16 @@ public class DownloadService extends IntentService {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                buffer.append(line).append("\n");
+                stringBuilder.append(line).append("\n");
             }
 
-            if (buffer.length() == 0) {
+            if (stringBuilder.length() == 0) {
                 return;
             }
-            placesJsonStr = buffer.toString();
+            placesJsonStr = stringBuilder.toString();
             Log.d("PLACES_JSON", placesJsonStr);
             getPlacesDataFromJson(placesJsonStr);
+            Prefs.markSync(this);
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         } finally {

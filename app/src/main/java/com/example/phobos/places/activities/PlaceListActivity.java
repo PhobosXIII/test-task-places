@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.phobos.places.DownloadService;
+import com.example.phobos.places.Prefs;
 import com.example.phobos.places.fragments.PlaceDetailFragment;
 import com.example.phobos.places.R;
 import com.example.phobos.places.adapters.PlaceAdapter;
@@ -69,7 +70,9 @@ public class PlaceListActivity extends AppCompatActivity
             mTwoPane = true;
         }
 
-        DownloadService.getPlaces(this);
+        if (!Prefs.isSync(this)) {
+            DownloadService.getPlaces(this);
+        }
         getSupportLoaderManager().initLoader(PLACES_LOADER, null, this);
     }
 
