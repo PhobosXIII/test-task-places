@@ -1,4 +1,4 @@
-package com.example.phobos.places;
+package com.example.phobos.places.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,6 +15,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.phobos.places.DownloadService;
+import com.example.phobos.places.fragments.PlaceDetailFragment;
+import com.example.phobos.places.R;
 import com.example.phobos.places.adapters.PlaceAdapter;
 
 import static com.example.phobos.places.data.PlacesContract.PlaceEntry;

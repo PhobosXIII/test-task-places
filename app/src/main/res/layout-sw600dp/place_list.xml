@@ -9,7 +9,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context="com.example.phobos.places.PlaceListActivity">
+    tools:context=".activities.PlaceListActivity">
 
     <!--
     This layout is a two-pane layout for the Places
@@ -25,7 +25,7 @@
         android:layout_width="@dimen/item_width"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"
-        tools:context="com.example.phobos.places.PlaceListActivity"
+        tools:context=".activities.PlaceListActivity"
         tools:listitem="@layout/place_list_content" />
 
     <FrameLayout

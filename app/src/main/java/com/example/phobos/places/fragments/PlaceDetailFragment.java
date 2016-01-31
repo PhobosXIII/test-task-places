@@ -1,4 +1,4 @@
-package com.example.phobos.places;
+package com.example.phobos.places.fragments;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -11,6 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.phobos.places.R;
+import com.example.phobos.places.activities.PlaceDetailActivity;
+import com.example.phobos.places.activities.PlaceListActivity;
 
 import static com.example.phobos.places.data.PlacesContract.PlaceEntry;
 
