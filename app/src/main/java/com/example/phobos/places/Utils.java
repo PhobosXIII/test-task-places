@@ -13,7 +13,7 @@ public class Utils {
 
     public static String formatDate(String x) {
         String dateStr = "";
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
         Date date = strToDate(x);
         if (date != null) {
             dateStr = sdf.format(date);
@@ -23,7 +23,7 @@ public class Utils {
 
     public static String dateToStr(Date date) {
         String dateStr = null;
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getDefault());
         if (date != null) dateStr = sdf.format(date);
         return dateStr;
@@ -31,7 +31,7 @@ public class Utils {
 
     public static Date strToDate(String x) {
         Date date = null;
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getDefault());
         if (x != null) {
             x = x.replace("Z", "+00:00");
