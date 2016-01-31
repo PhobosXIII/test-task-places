@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
@@ -17,9 +16,9 @@ import android.view.View;
 
 import com.example.phobos.places.DownloadService;
 import com.example.phobos.places.Prefs;
-import com.example.phobos.places.fragments.PlaceDetailFragment;
 import com.example.phobos.places.R;
 import com.example.phobos.places.adapters.PlaceAdapter;
+import com.example.phobos.places.fragments.PlaceDetailFragment;
 
 import static com.example.phobos.places.data.PlacesContract.PlaceEntry;
 
@@ -34,8 +33,10 @@ import static com.example.phobos.places.data.PlacesContract.PlaceEntry;
 public class PlaceListActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor>, PlaceAdapter.ItemClickListener {
     private static final int PLACES_LOADER = 0;
+    private static final String KEY_POSITION = "position";
 
-    private boolean mTwoPane;
+    private boolean twoPane;
+    private RecyclerView recyclerView;
     private PlaceAdapter adapter;
     private int position = RecyclerView.NO_POSITION;
 
@@ -57,17 +58,21 @@ public class PlaceListActivity extends AppCompatActivity
             }
         });
 
-        View recyclerView = findViewById(R.id.place_list);
+        recyclerView = (RecyclerView) findViewById(R.id.place_list);
         assert recyclerView != null;
         adapter = new PlaceAdapter(this);
-        setupRecyclerView((RecyclerView) recyclerView);
+        recyclerView.setAdapter(adapter);
 
         if (findViewById(R.id.place_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-sw600dp).
             // If this view is present, then the
             // activity should be in two-pane mode.
-            mTwoPane = true;
+            twoPane = true;
+        }
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(KEY_POSITION)) {
+            position = savedInstanceState.getInt(KEY_POSITION);
         }
 
         if (!Prefs.isSync(this)) {
@@ -76,8 +81,12 @@ public class PlaceListActivity extends AppCompatActivity
         getSupportLoaderManager().initLoader(PLACES_LOADER, null, this);
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(adapter);
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (position != RecyclerView.NO_POSITION) {
+            outState.putInt(KEY_POSITION, position);
+        }
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -85,7 +94,7 @@ public class PlaceListActivity extends AppCompatActivity
         this.position = position;
         if (cursor != null) {
             Uri contentUri = PlaceEntry.buildPlaceUri(id);
-            if (mTwoPane) {
+            if (twoPane) {
                 Bundle arguments = new Bundle();
                 arguments.putParcelable("uri", contentUri);
                 PlaceDetailFragment fragment = new PlaceDetailFragment();
@@ -120,6 +129,9 @@ public class PlaceListActivity extends AppCompatActivity
         switch (loader.getId()) {
             case PLACES_LOADER:
                 adapter.swapCursor(data);
+                if (position != RecyclerView.NO_POSITION) {
+                    recyclerView.smoothScrollToPosition(position);
+                }
                 break;
         }
     }
