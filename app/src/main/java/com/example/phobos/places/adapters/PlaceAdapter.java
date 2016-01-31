@@ -15,6 +15,10 @@ import static com.example.phobos.places.data.PlacesContract.PlaceEntry;
 
 public class PlaceAdapter extends RecyclerViewCursorAdapter<PlaceAdapter.ViewHolder> {
     private ItemClickListener itemClickListener;
+    private int selectedItem = RecyclerView.NO_POSITION;
+    private SelectionMode mode = SelectionMode.NONE;
+
+    public enum SelectionMode {NONE, SINGLE}
 
     public PlaceAdapter(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
@@ -51,7 +55,11 @@ public class PlaceAdapter extends RecyclerViewCursorAdapter<PlaceAdapter.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, Cursor cursor) {
+    public void onBindViewHolder(final ViewHolder holder, Cursor cursor) {
+        if (getMode() == SelectionMode.SINGLE) {
+            int position = holder.getAdapterPosition();
+            holder.view.setActivated(isSelected(position));
+        }
         final String text = cursor.getString(cursor.getColumnIndex(PlaceEntry.COLUMN_TEXT));
         final String lastVisited = cursor.getString(cursor.getColumnIndex(PlaceEntry.COLUMN_LAST_VISITED));
         holder.textView.setText(text);
@@ -59,16 +67,37 @@ public class PlaceAdapter extends RecyclerViewCursorAdapter<PlaceAdapter.ViewHol
         holder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final RecyclerView recyclerView = (RecyclerView) v.getParent();
-                final int position = recyclerView.getChildLayoutPosition(v);
-
+                final int position = holder.getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     final Cursor cursor = getItem(position);
                     int columnIdIndex = cursor.getColumnIndex(PlaceEntry._ID);
                     long id = cursor.getLong(columnIdIndex);
                     itemClickListener.itemClicked(cursor, position, id);
+                    switchSelectedState(position);
                 }
             }
         });
+    }
+
+    public void switchSelectedState(int position) {
+        if (position < 0 || getMode() == SelectionMode.NONE) {
+            position = RecyclerView.NO_POSITION;
+        }
+        int previousSelectedItem = selectedItem;
+        selectedItem = position;
+        notifyItemChanged(previousSelectedItem);
+        notifyItemChanged(selectedItem);
+    }
+
+    public boolean isSelected(int position) {
+        return position == selectedItem;
+    }
+
+    public void setMode(SelectionMode mode) {
+        this.mode = mode;
+    }
+
+    public SelectionMode getMode() {
+        return mode;
     }
 }

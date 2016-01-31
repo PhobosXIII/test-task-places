@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.phobos.places.DividerItemDecoration;
 import com.example.phobos.places.DownloadService;
 import com.example.phobos.places.Prefs;
 import com.example.phobos.places.R;
@@ -62,6 +63,7 @@ public class PlaceListActivity extends AppCompatActivity
         assert recyclerView != null;
         adapter = new PlaceAdapter(this);
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this));
 
         if (findViewById(R.id.place_detail_container) != null) {
             // The detail container view will be present only in the
@@ -69,6 +71,7 @@ public class PlaceListActivity extends AppCompatActivity
             // If this view is present, then the
             // activity should be in two-pane mode.
             twoPane = true;
+            adapter.setMode(PlaceAdapter.SelectionMode.SINGLE);
         }
 
         if (savedInstanceState != null && savedInstanceState.containsKey(KEY_POSITION)) {
@@ -131,6 +134,9 @@ public class PlaceListActivity extends AppCompatActivity
                 adapter.swapCursor(data);
                 if (position != RecyclerView.NO_POSITION) {
                     recyclerView.smoothScrollToPosition(position);
+                    if (twoPane) {
+                        adapter.switchSelectedState(position);
+                    }
                 }
                 break;
         }

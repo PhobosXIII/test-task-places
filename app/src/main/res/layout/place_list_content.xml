@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="@dimen/item_min_height"
-    android:orientation="horizontal">
+    android:paddingTop="@dimen/image_margin"
+    android:orientation="horizontal"
+    android:background="@drawable/state_list_item_background">
 
     <ImageView
         android:id="@+id/image"
