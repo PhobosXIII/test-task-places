@@ -6,4 +6,9 @@
     <string name="last_visit_placeholder">01.01.2016</string>
 
     <string name="content_authority" translatable="false">com.example.phobos.places</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="action_map">Map</string>
+    <string name="action_done">Done</string>
+    <string name="action_place">Place</string>
 </resources>

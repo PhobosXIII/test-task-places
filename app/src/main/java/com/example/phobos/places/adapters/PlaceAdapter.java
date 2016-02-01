@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.phobos.places.R;
 import com.example.phobos.places.Utils;
 
@@ -60,8 +61,16 @@ public class PlaceAdapter extends RecyclerViewCursorAdapter<PlaceAdapter.ViewHol
             int position = holder.getAdapterPosition();
             holder.view.setActivated(isSelected(position));
         }
+        final String image = cursor.getString(cursor.getColumnIndex(PlaceEntry.COLUMN_IMAGE));
         final String text = cursor.getString(cursor.getColumnIndex(PlaceEntry.COLUMN_TEXT));
         final String lastVisited = cursor.getString(cursor.getColumnIndex(PlaceEntry.COLUMN_LAST_VISITED));
+        Glide.with(holder.view.getContext())
+                .load(image)
+                .fitCenter()
+                .placeholder(R.drawable.ic_panorama_40dp)
+                .error(R.drawable.ic_panorama_40dp)
+                .crossFade()
+                .into(holder.imageView);
         holder.textView.setText(text);
         holder.lastVisitedView.setText(Utils.formatDate(lastVisited));
         holder.setOnClickListener(new View.OnClickListener() {
