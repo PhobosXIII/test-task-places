@@ -12,6 +12,8 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.phobos.places.DividerItemDecoration;
@@ -117,9 +119,13 @@ public class PlaceListActivity extends AppCompatActivity
         switch (id) {
             case PLACES_LOADER:
                 Uri placesUri = PlaceEntry.buildPlacesUri();
+                String[] projection = {PlaceEntry._ID,
+                        PlaceEntry.COLUMN_IMAGE,
+                        PlaceEntry.COLUMN_TEXT,
+                        PlaceEntry.COLUMN_LAST_VISITED};
                 return new CursorLoader(this,
                         placesUri,
-                        new String[] {PlaceEntry._ID, PlaceEntry.COLUMN_TEXT, PlaceEntry.COLUMN_LAST_VISITED},
+                        projection,
                         null,
                         null,
                         null);
@@ -149,5 +155,23 @@ public class PlaceListActivity extends AppCompatActivity
                 adapter.swapCursor(null);
                 break;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actions_places_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_map) {
+            Uri contentUri = PlaceEntry.buildPlacesUri();
+            Intent map = new Intent(this, MapsActivity.class).setData(contentUri);
+            startActivity(map);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

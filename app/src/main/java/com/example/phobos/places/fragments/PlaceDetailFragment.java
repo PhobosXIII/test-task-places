@@ -1,5 +1,6 @@
 package com.example.phobos.places.fragments;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,11 +9,15 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.phobos.places.R;
+import com.example.phobos.places.activities.MapsActivity;
 import com.example.phobos.places.activities.PlaceDetailActivity;
 import com.example.phobos.places.activities.PlaceListActivity;
 
@@ -44,6 +49,7 @@ public class PlaceDetailFragment extends Fragment implements LoaderManager.Loade
         if (arguments != null && arguments.containsKey(ARG_URI)) {
             uri = arguments.getParcelable(ARG_URI);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -64,9 +70,15 @@ public class PlaceDetailFragment extends Fragment implements LoaderManager.Loade
         if (uri != null) {
             switch (id) {
                 case PLACE_LOADER:
+                    String[] projection = {PlaceEntry._ID,
+                            PlaceEntry.COLUMN_LATITUDE,
+                            PlaceEntry.COLUMN_LONGITUDE,
+                            PlaceEntry.COLUMN_TEXT,
+                            PlaceEntry.COLUMN_IMAGE,
+                            PlaceEntry.COLUMN_LAST_VISITED};
                     return new CursorLoader(getActivity(),
                             uri,
-                            new String[]{PlaceEntry.COLUMN_TEXT, PlaceEntry.COLUMN_LAST_VISITED},
+                            projection,
                             null,
                             null,
                             null);
@@ -89,4 +101,25 @@ public class PlaceDetailFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {}
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.actions_place_detail, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_place) {
+            Intent map = new Intent(getActivity(), MapsActivity.class).setData(uri);
+            startActivity(map);
+            return true;
+        }
+
+        if (id == R.id.action_done) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
