@@ -1,9 +1,86 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/place_detail"
-    style="?android:attr/textAppearanceLarge"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:textIsSelectable="true"
-    tools:context=".fragments.PlaceDetailFragment" />
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/text_margin"
+    android:layout_marginLeft="@dimen/text_margin"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    tools:context=".fragments.PlaceDetailFragment">
+
+    <ImageButton
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="150dp"
+        android:layout_marginBottom="@dimen/image_margin"
+        android:src="@drawable/ic_add_a_photo_96dp" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="50">
+
+        <EditText
+            android:id="@+id/etText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:ems="15"
+            android:maxLength="50"
+            android:inputType="textCapWords"
+            android:hint="@string/hint_text"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLatitudeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/etLatitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:ems="15"
+            android:inputType="numberSigned|numberDecimal"
+            android:maxLength="10"
+            android:hint="@string/hint_latitude"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLongitudeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/etLongitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:ems="15"
+            android:maxLength="11"
+            android:inputType="numberSigned|numberDecimal"
+            android:hint="@string/hint_longitude"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <EditText
+        android:id="@+id/etLastVisited"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:ems="15"
+        android:hint="@string/hint_last_visited"
+        android:clickable="true"
+        android:focusable="false"/>
+</LinearLayout>

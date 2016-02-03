@@ -8,13 +8,18 @@ import java.util.TimeZone;
 
 public class Utils {
     private static final String DATE_FORMAT = "EEE MMM dd HH:mm:ss Z yyyy";
+    private static final String SIMPLE_DATE_FORMAT = "dd.MM.yyyy";
 
     private Utils() {}
 
     public static String formatDate(String x) {
-        String dateStr = "";
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
         Date date = strToDate(x);
+        return formatDate(date);
+    }
+
+    public static String formatDate(Date date) {
+        String dateStr = "";
+        SimpleDateFormat sdf = new SimpleDateFormat(SIMPLE_DATE_FORMAT, Locale.ENGLISH);
         if (date != null) {
             dateStr = sdf.format(date);
         }
@@ -25,7 +30,9 @@ public class Utils {
         String dateStr = null;
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getDefault());
-        if (date != null) dateStr = sdf.format(date);
+        if (date != null) {
+            dateStr = sdf.format(date);
+        }
         return dateStr;
     }
 
@@ -34,7 +41,6 @@ public class Utils {
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
         sdf.setTimeZone(TimeZone.getDefault());
         if (x != null) {
-            x = x.replace("Z", "+00:00");
             try {
                 date = sdf.parse(x);
             }

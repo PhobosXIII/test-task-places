@@ -2,13 +2,23 @@
     <string name="app_name">Places</string>
     <string name="title_new_place">New place</string>
     <string name="title_place_detail">Place Detail</string>
+    <string name="title_activity_maps">Map</string>
+
     <string name="text_placeholder">Krasnoyarsk</string>
     <string name="last_visit_placeholder">01.01.2016</string>
 
     <string name="content_authority" translatable="false">com.example.phobos.places</string>
-    <string name="title_activity_maps">Map</string>
 
     <string name="action_map">Map</string>
     <string name="action_done">Done</string>
     <string name="action_place">Place</string>
+
+    <string name="hint_text">Enter address</string>
+    <string name="hint_latitude">Enter latitude</string>
+    <string name="hint_longitude">Enter longitude</string>
+    <string name="hint_last_visited">Enter last visited date</string>
+
+    <string name="select_photo">Select photo</string>
+    <string name="required_field">Required field</string>
+    <string name="place_saved">Place was saved</string>
 </resources>

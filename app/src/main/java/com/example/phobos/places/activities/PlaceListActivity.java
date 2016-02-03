@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -56,8 +55,8 @@ public class PlaceListActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), PlaceDetailActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -104,7 +103,7 @@ public class PlaceListActivity extends AppCompatActivity
                 arguments.putParcelable("uri", contentUri);
                 PlaceDetailFragment fragment = new PlaceDetailFragment();
                 fragment.setArguments(arguments);
-                getSupportFragmentManager().beginTransaction()
+                getFragmentManager().beginTransaction()
                         .replace(R.id.place_detail_container, fragment)
                         .commit();
             } else {

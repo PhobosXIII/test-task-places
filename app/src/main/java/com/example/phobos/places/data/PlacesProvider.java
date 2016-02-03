@@ -117,13 +117,18 @@ public class PlacesProvider extends ContentProvider {
 
         switch (match) {
             case PLACES:
-                deletedRows = db.delete(PlaceEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+
+            case PLACE:
+                selection = PlaceEntry._ID + " = ? ";
+                selectionArgs = new String[] {uri.getLastPathSegment()};
                 break;
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
+        deletedRows = db.delete(PlaceEntry.TABLE_NAME, selection, selectionArgs);
         if (deletedRows != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
@@ -138,13 +143,18 @@ public class PlacesProvider extends ContentProvider {
 
         switch (match) {
             case PLACES:
-                updatedRows = db.update(PlaceEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+
+            case PLACE:
+                selection = PlaceEntry._ID + " = ? ";
+                selectionArgs = new String[] {uri.getLastPathSegment()};
                 break;
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
+        updatedRows = db.update(PlaceEntry.TABLE_NAME, values, selection, selectionArgs);
         if (updatedRows != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }

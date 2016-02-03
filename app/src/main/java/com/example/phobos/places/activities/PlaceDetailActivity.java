@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.example.phobos.places.fragments.PlaceDetailFragment;
 import com.example.phobos.places.R;
+import com.example.phobos.places.fragments.PlaceDetailFragment;
 
 /**
  * An activity representing a single Place detail screen. This
@@ -22,9 +22,9 @@ public class PlaceDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_detail);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -36,7 +36,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
             arguments.putParcelable(PlaceDetailFragment.ARG_URI, getIntent().getData());
             PlaceDetailFragment fragment = new PlaceDetailFragment();
             fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .add(R.id.place_detail_container, fragment)
                     .commit();
         }
