@@ -26,7 +26,7 @@ public class PlaceAdapter extends RecyclerViewCursorAdapter<PlaceAdapter.ViewHol
     }
 
     public interface ItemClickListener {
-        void itemClicked(Cursor cursor, int position, long id);
+        void itemClicked(View view, Cursor cursor, int position, long id);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -81,7 +81,7 @@ public class PlaceAdapter extends RecyclerViewCursorAdapter<PlaceAdapter.ViewHol
                     final Cursor cursor = getItem(position);
                     int columnIdIndex = cursor.getColumnIndex(PlaceEntry._ID);
                     long id = cursor.getLong(columnIdIndex);
-                    itemClickListener.itemClicked(cursor, position, id);
+                    itemClickListener.itemClicked(v, cursor, position, id);
                     switchSelectedState(position);
                 }
             }

@@ -1,5 +1,6 @@
 package com.example.phobos.places.activities;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -55,8 +56,10 @@ public class PlaceListActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), PlaceDetailActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(PlaceListActivity.this, PlaceDetailActivity.class);
+                ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,0,
+                        view.getWidth(), view.getHeight());
+                startActivity(intent, options.toBundle());
             }
         });
 
@@ -94,7 +97,7 @@ public class PlaceListActivity extends AppCompatActivity
     }
 
     @Override
-    public void itemClicked(Cursor cursor, int position, long id) {
+    public void itemClicked(View view, Cursor cursor, int position, long id) {
         this.position = position;
         if (cursor != null) {
             Uri contentUri = PlaceEntry.buildPlaceUri(id);
@@ -108,7 +111,9 @@ public class PlaceListActivity extends AppCompatActivity
                         .commit();
             } else {
                 Intent intent = new Intent(this, PlaceDetailActivity.class).setData(contentUri);
-                startActivity(intent);
+                ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,0,
+                        view.getWidth(), view.getHeight());
+                startActivity(intent, options.toBundle());
             }
         }
     }
@@ -168,7 +173,9 @@ public class PlaceListActivity extends AppCompatActivity
         if (id == R.id.action_map) {
             Uri contentUri = PlaceEntry.buildPlacesUri();
             Intent map = new Intent(this, MapsActivity.class).setData(contentUri);
-            startActivity(map);
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(this,
+                    android.R.anim.fade_in, android.R.anim.fade_out);
+            startActivity(map, options.toBundle());
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -30,6 +29,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.HashMap;
+
 import static com.example.phobos.places.data.PlacesContract.PlaceEntry;
 
 public class MapsActivity extends AppCompatActivity
@@ -38,6 +39,7 @@ public class MapsActivity extends AppCompatActivity
 
     private GoogleMap map;
     private Uri uri;
+    private HashMap<String, Long> markers = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,7 @@ public class MapsActivity extends AppCompatActivity
                 if (data != null && data.moveToFirst()) {
                     boolean onePlace = data.getCount() == 1;
                     do {
+                        final long id = data.getLong(data.getColumnIndex(PlaceEntry._ID));
                         final double lat = data.getDouble(data.getColumnIndex(PlaceEntry.COLUMN_LATITUDE));
                         final double lng = data.getDouble(data.getColumnIndex(PlaceEntry.COLUMN_LONGITUDE));
                         final String text = data.getString(data.getColumnIndex(PlaceEntry.COLUMN_TEXT));
@@ -118,6 +121,7 @@ public class MapsActivity extends AppCompatActivity
                                 .snippet(Utils.formatDate(lastVisited));
                         Marker marker = map.addMarker(markerOptions);
                         loadMarkerIcon(marker, image);
+                        markers.put(marker.getId(), id);
 
                         if (onePlace) {
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 5));
@@ -151,6 +155,9 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(MapsActivity.this, marker.getTitle(), Toast.LENGTH_SHORT).show();
+        long id = markers.get(marker.getId());
+        Uri contentUri = PlaceEntry.buildPlaceUri(id);
+        Intent intent = new Intent(this, PlaceDetailActivity.class).setData(contentUri);
+        startActivity(intent);
     }
 }

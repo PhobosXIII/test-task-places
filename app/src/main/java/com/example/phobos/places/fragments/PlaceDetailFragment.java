@@ -1,6 +1,7 @@
 package com.example.phobos.places.fragments;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.ContentValues;
@@ -10,7 +11,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.phobos.places.R;
@@ -202,7 +203,9 @@ public class PlaceDetailFragment extends Fragment implements LoaderManager.Loade
         int id = item.getItemId();
         if (id == R.id.action_place) {
             Intent map = new Intent(getActivity(), MapsActivity.class).setData(uri);
-            startActivity(map);
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(),
+                    android.R.anim.fade_in, android.R.anim.fade_out);
+            startActivity(map, options.toBundle());
             return true;
         }
 
@@ -212,7 +215,7 @@ public class PlaceDetailFragment extends Fragment implements LoaderManager.Loade
                 if (getActivity() instanceof PlaceDetailActivity) {
                     getActivity().finish();
                 }
-                Snackbar.make(getView(), R.string.place_saved, Snackbar.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.place_saved, Toast.LENGTH_LONG).show();
             }
             return true;
         }
