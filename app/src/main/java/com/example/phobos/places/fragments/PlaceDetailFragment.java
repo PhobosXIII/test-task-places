@@ -213,7 +213,7 @@ public class PlaceDetailFragment extends Fragment implements LoaderManager.Loade
             if (isValid()) {
                 save();
                 if (getActivity() instanceof PlaceDetailActivity) {
-                    getActivity().finish();
+                    getActivity().navigateUpTo(new Intent(getActivity(), PlaceListActivity.class));
                 }
                 Toast.makeText(getActivity(), R.string.place_saved, Toast.LENGTH_LONG).show();
             }

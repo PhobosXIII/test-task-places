@@ -146,7 +146,8 @@ public class MapsActivity extends AppCompatActivity
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
-                        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 96, 96, false);
+                        int size = getResources().getDimensionPixelSize(R.dimen.marker_icon_size);
+                        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, size, size, false);
                         BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(resizedBitmap);
                         marker.setIcon(icon);
                     }
