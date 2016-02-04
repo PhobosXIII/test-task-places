@@ -1,13 +1,13 @@
 package com.example.phobos.places.activities;
 
+import android.app.LoaderManager;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -66,7 +66,7 @@ public class MapsActivity extends AppCompatActivity
         map = googleMap;
         map.getUiSettings().setMapToolbarEnabled(false);
         map.setOnInfoWindowClickListener(this);
-        getSupportLoaderManager().initLoader(PLACES_LOADER, null, this);
+        getLoaderManager().initLoader(PLACES_LOADER, null, this);
     }
 
     @Override

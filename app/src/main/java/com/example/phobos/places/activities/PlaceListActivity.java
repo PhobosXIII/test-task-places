@@ -1,14 +1,14 @@
 package com.example.phobos.places.activities;
 
 import android.app.ActivityOptions;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,10 +18,10 @@ import android.view.View;
 
 import com.example.phobos.places.DividerItemDecoration;
 import com.example.phobos.places.DownloadService;
-import com.example.phobos.places.utils.Prefs;
 import com.example.phobos.places.R;
 import com.example.phobos.places.adapters.PlaceAdapter;
 import com.example.phobos.places.fragments.PlaceDetailFragment;
+import com.example.phobos.places.utils.Prefs;
 
 import static com.example.phobos.places.data.PlacesContract.PlaceEntry;
 
@@ -85,7 +85,7 @@ public class PlaceListActivity extends AppCompatActivity
         if (!Prefs.isSync(this)) {
             DownloadService.getPlaces(this);
         }
-        getSupportLoaderManager().initLoader(PLACES_LOADER, null, this);
+        getLoaderManager().initLoader(PLACES_LOADER, null, this);
     }
 
     @Override
