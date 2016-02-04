@@ -18,7 +18,7 @@ import android.view.View;
 
 import com.example.phobos.places.DividerItemDecoration;
 import com.example.phobos.places.DownloadService;
-import com.example.phobos.places.Prefs;
+import com.example.phobos.places.utils.Prefs;
 import com.example.phobos.places.R;
 import com.example.phobos.places.adapters.PlaceAdapter;
 import com.example.phobos.places.fragments.PlaceDetailFragment;

@@ -1,4 +1,4 @@
-package com.example.phobos.places;
+package com.example.phobos.places.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

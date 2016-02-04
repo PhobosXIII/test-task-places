@@ -1,4 +1,4 @@
-package com.example.phobos.places;
+package com.example.phobos.places.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

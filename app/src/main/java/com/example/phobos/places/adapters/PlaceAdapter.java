@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.phobos.places.R;
-import com.example.phobos.places.Utils;
+import com.example.phobos.places.utils.Utils;
 
 import static com.example.phobos.places.data.PlacesContract.PlaceEntry;
 

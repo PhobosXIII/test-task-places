@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.phobos.places.R;
-import com.example.phobos.places.Utils;
+import com.example.phobos.places.utils.Utils;
 import com.example.phobos.places.activities.MapsActivity;
 import com.example.phobos.places.activities.PlaceDetailActivity;
 import com.example.phobos.places.activities.PlaceListActivity;
