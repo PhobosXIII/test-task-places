@@ -2,13 +2,13 @@ package com.example.phobos.places.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class Prefs {
-    private static final String PREFS_FILE = "settings";
     private static final String PREFS_SYNC = "sync";
 
     public static SharedPreferences getPrefs(Context context) {
-        return context.getSharedPreferences(PREFS_FILE, 0);
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static void markSync(Context context) {
